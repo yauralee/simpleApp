@@ -8,9 +8,20 @@
  */
 
 // Apply the java plugin to add support for Java
-apply plugin: 'java'
+//The most common use case for using a plugin is to both resolve the plugin and apply it to the current project.
+//apply from: 'other.gradle'
+
+//This is all you need to define a Java project. This will apply the Java plugin to your project, which adds a number of tasks to your project.
+//Gradle expects to find your production source code under src/main/java and your test source code under src/test/java. In addition, any files under src/main/resources will be included in the JAR file as resources, and any files under src/test/resources will be included in the classpath used to run the tests. All output files are created under the build directory, with the JAR file ending up in the build/libs directory.
+//When you run gradle build, Gradle will compile and test your code, and create a JAR file containing your main classes and resources:
+
+
+apply plugin: 'java' //Gradle at its core intentionally provides very little for real world automation. All of the useful features, like the ability to compile Java code, are added by plugins
 apply plugin: 'eclipse'
-apply plugin: 'idea'
+//The IDEA plugin adds a number of tasks to your project. The main tasks that you will use are the idea and cleanIdea tasks.
+
+
+apply plugin: 'idea'//The IDEA plugin generates files that are used by IntelliJ IDEA, thus making it possible to open the project from IDEA
 apply plugin: 'application'
 mainClassName = 'hello.HelloWorld'
 
@@ -20,6 +31,9 @@ repositories {
     // Use 'jcenter' for resolving your dependencies.
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
+
+    //Usually, a Java project will have some dependencies on external JAR files. To reference these JAR files in the project, you need to tell Gradle where to find them.
+    //In Gradle, artifacts such as JAR files, are located in a repository.
     mavenCentral()
 }
 
@@ -27,6 +41,10 @@ repositories {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 dependencies {
+    //compile group: 'org.hibernate', name: 'hibernate-core', version: '3.6.7.Final'
+    //The shortcut form for declaring external dependencies looks like “group:name:version”.
+
+
     // The production code uses the SLF4J logging API at compile time
     compile 'org.slf4j:slf4j-api:1.7.21'
 
@@ -35,6 +53,7 @@ dependencies {
     // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
     // 'test.useTestNG()' to your build script.
     compile "joda-time:joda-time:2.2"
+
     testCompile 'junit:junit:4.12'
 }
 
