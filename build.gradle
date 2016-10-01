@@ -40,8 +40,27 @@ dependencies {
 
 jar {
     baseName = 'gs-gradle'
-    version =  '0.1.0'
+    version = '0.1.0'
 }
 
 
-
+// gradle dist test
+//gradle dist -x test
+//gradle --rerun-tasks test
+//gradle projects
+//gradle tasks
+//gradle tasks --all
+//gradle -q help --task test1  : show task usage details
+task compile << {
+    println 'compiling source'
+}
+task compileTest(dependsOn: compile) << {
+    println 'compiling unit tests'
+}
+task test1(dependsOn: [compile, compileTest]) << {
+    println 'running unit tests'
+}
+task dist(dependsOn: [compile, test1]) << {
+    println 'building the distribution'
+}
+defaultTasks 'compile', 'test'
